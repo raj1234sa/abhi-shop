@@ -1,0 +1,41 @@
+<mat-toolbar color="primary" class="sticky-top">
+        <button (click)='navToggle()' mat-icon-button aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+        </button>
+        <span>Abhi Steelers</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button aria-label="Example icon-button with heart icon">
+                <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Example icon-button with share icon">
+                <mat-icon>share</mat-icon>
+        </button>
+</mat-toolbar>
+<div class="row no-gutters">
+        <div class="col-2" [ngClass]="{'show_nav nav_sidebar': showNav, 'hide_nav nav_sidebar': !showNav}">
+                <ul class="m-0 p-0 mat-drawer-container mat-sidenav-container">
+                        <li class="mat-ripple mat-list-item-ripple" *ngFor="let item of sibeBarLinks">
+                                <a [routerLink]="(item.link != '') ? item.link : ['#']" [routerLinkActive]="item.child==null?'active':''" [ngClass]="{super_item: true}" (click)="menuToggle($event)">{{item.title}} 
+                                        <mat-icon *ngIf="item.child!=null">keyboard_arrow_left</mat-icon></a>
+                                <ul class="m-0 p-0 mat-drawer-container mat-sidenav-container sub_item_list" *ngIf="item.child!=null">
+                                        <li class="mat-ripple mat-list-item-ripple" *ngFor="let subitem of item.child">
+                                                <a [routerLink]='subitem.link' routerLinkActive='active' [ngClass]="{sub_item: true}">{{subitem.title}}</a>
+                                        </li>
+                                </ul>
+                        </li>
+                </ul>
+                <!-- <mat-sidenav-container>
+                        <mat-action-list *ngFor="let item of sibeBarLinks">
+                                <a mat-list-item [routerLink]='item.link' routerLinkActive='active' [ngClass]="{super_item: true}"> {{item.title}} 
+                                        <mat-icon *ngIf="item.child!=null">keyboard_arrow_left</mat-icon>
+                                </a>
+                                <mat-action-list *ngFor="let subitem of item.child" [ngClass]='{sub_item_list: true}'>
+                                        <a mat-list-item [routerLink]='subitem.link' routerLinkActive='active'> {{subitem.title}} </a>
+                                </mat-action-list>
+                        </mat-action-list>
+                </mat-sidenav-container> -->
+        </div>
+        <div [ngClass]="{'col-10 offset-md-2': showNav, 'col-12 offset-md-0': !showNav}">
+                <router-outlet></router-outlet>
+        </div>
+</div>
